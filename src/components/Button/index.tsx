@@ -1,29 +1,44 @@
-// components/CenteredButtons.jsx
-import Image from 'next/image';
-import React from 'react';
-import icon1 from '../assets/icon1.png'; // Importe a primeira imagem
-import icon2 from '../assets/icon2.png'; // Importe a segunda imagem
+"use client";
 
-export default function CenteredButtons() {
+import React from "react";
+import { useRouter } from "next/navigation";
+
+export default function FooterButtons() {
+  const router = useRouter();
+
+  // Função para o botão "Salvar"
+  const handleSave = async () => {
+    try {
+      // Simulação de salvamento bem-sucedido
+      console.log("Simulação: Dados salvos com sucesso!");
+      router.push("/results"); // Redireciona para a página "/results"
+    } catch (error) {
+      console.error("Erro ao salvar:", error);
+    }
+  };
+
+  // Função para o botão "Voltar"
+  const handleBack = () => {
+    router.push("/"); // Redireciona para a página inicial (Home)
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="flex gap-8">
-        {/* Botão 1 */}
-        <div className="flex flex-col items-center">
-          <button className="bg-[#CEB863] p-4 rounded-lg">
-            <Image src={icon1} alt="Icon 1" width={50} height={50} />
-          </button>
-          <label className="mt-2 text-black">Botão 1</label>
-        </div>
+    <div className="absolute bottom-16 left-0 w-full flex justify-center gap-12">
+      {/* Botão Voltar */}
+      <button
+        onClick={handleBack}
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      >
+        Voltar
+      </button>
 
-        {/* Botão 2 */}
-        <div className="flex flex-col items-center">
-          <button className="bg-[#CEB863] p-4 rounded-lg">
-            <Image src={icon2} alt="Icon 2" width={50} height={50} />
-          </button>
-          <label className="mt-2 text-black">Botão 2</label>
-        </div>
-      </div>
+      {/* Botão Salvar */}
+      <button
+        onClick={handleSave}
+        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+      >
+        Salvar
+      </button>
     </div>
   );
 }
