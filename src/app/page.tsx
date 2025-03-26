@@ -1,9 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation"; // Para navegação programática
 import Header from "../components/Header"; // Importe o Header
 import icon1 from "../assets/camera.svg";
 import icon2 from "../assets/galeria.svg";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleNavigateToCamera = () => {
+    router.push("/select"); //rota para abrir a pagina de camera
+  };
+
+  const handleNavigateToGallery = () => {
+    router.push("/select"); // rota para a pagina da seleção da galeria
+  };
+
   return (
     <div className="flex flex-col bg-[#F7E2AB] w-full">
       {/* Header */}
@@ -14,22 +27,27 @@ export default function Home() {
         <div className="flex gap-8">
           {/* Botão 1 */}
           <div className="flex flex-col items-center">
-            <button className="bg-[#CEB863] p-4 rounded-lg">
+            <button
+              onClick={handleNavigateToCamera}
+              className="bg-[#CEB863] p-4 rounded-lg"
+            >
               <Image src={icon1} alt="Icon 1" width={50} height={50} />
             </button>
-            <label className="mt-2 text-black">Botão 1</label>
+            <label className="mt-2 text-black text-center">Tirar foto</label>
           </div>
 
           {/* Botão 2 */}
           <div className="flex flex-col items-center">
-            <button className="bg-[#CEB863] p-4 rounded-lg">
+            <button
+              onClick={handleNavigateToGallery}
+              className="bg-[#CEB863] p-4 rounded-lg"
+            >
               <Image src={icon2} alt="Icon 2" width={50} height={50} />
             </button>
-            <label className="mt-2 text-black">Botão 2</label>
+            <label className="mt-2 text-black text-center">Abrir galeria</label>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
