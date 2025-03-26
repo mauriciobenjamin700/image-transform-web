@@ -3,23 +3,24 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-export default function FooterButtons() {
+// Props para rotas dinâmicas
+interface FooterButtonsProps {
+  backRoute: string; // Rota para o botão "Voltar"
+  saveRoute: string; // Rota para o botão "Salvar"
+}
+
+export default function FooterButtons({ backRoute, saveRoute }: FooterButtonsProps) {
   const router = useRouter();
 
   // Função para o botão "Salvar"
-  const handleSave = async () => {
-    try {
-      // Simulação de salvamento bem-sucedido
-      console.log("Simulação: Dados salvos com sucesso!");
-      router.push("/results"); // Redireciona para a página "/results"
-    } catch (error) {
-      console.error("Erro ao salvar:", error);
-    }
+  const handleSave = () => {
+    console.log("Simulação: Dados salvos com sucesso!");
+    router.push(saveRoute); // Redireciona para a rota passada como prop
   };
 
   // Função para o botão "Voltar"
   const handleBack = () => {
-    router.push("/"); // Redireciona para a página inicial (Home)
+    router.push(backRoute); // Redireciona para a rota passada como prop
   };
 
   return (

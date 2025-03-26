@@ -34,7 +34,7 @@ export default function SelectPage() {
 
       {/* Botões abaixo do Selector */}
       <div className="w-full max-w-md px-4">
-        <FooterButtons /> {/* Use o componente FooterButtons */}
+      <FooterButtons backRoute="/" saveRoute="/results" />
       </div>
     </main>
   );
