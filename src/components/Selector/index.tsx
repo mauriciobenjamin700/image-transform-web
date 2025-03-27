@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa"; // Ícone de seta para baixo
+import {FILTERS} from "@/constants";
 
 interface DropdownProps {
   onFilterChange: (filter: string) => void; // Prop para notificar o componente pai sobre a seleção
@@ -44,22 +45,46 @@ export default function Dropdown({ onFilterChange }: DropdownProps) {
         <div className="absolute mt-1 w-80 bg-white border border-gray-400 rounded-lg shadow-lg z-10">
           <ul className="py-2">
             <li
-              onClick={() => handleOptionClick("blue")}
+              onClick={() => handleOptionClick(FILTERS.BLUR)}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
               Filtro 1
             </li>
             <li
-              onClick={() => handleOptionClick("grey")}
+              onClick={() => handleOptionClick(FILTERS.GRAY)}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
               Filtro 2
             </li>
             <li
-              onClick={() => handleOptionClick("green")}
+              onClick={() => handleOptionClick(FILTERS.SMOOTH)}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
-              Filtro 3
+              Filtro 4
+            </li>
+            <li
+              onClick={() => handleOptionClick(FILTERS.DETAIL)}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
+            >
+              Filtro 5
+            </li>
+            <li
+              onClick={() => handleOptionClick(FILTERS.EMBOSS)}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
+            >
+              Filtro 6
+            </li>
+            <li
+              onClick={() => handleOptionClick(FILTERS.SHARPEN)}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
+            >
+              Filtro 7
+            </li>
+            <li
+              onClick={() => handleOptionClick(FILTERS.EDGE_ENHANCE)}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
+            >
+              Filtro 8
             </li>
           </ul>
         </div>

@@ -7,7 +7,7 @@ import Selector from "../../components/Selector"; // Importe o componente Select
 import FooterButtons from "../../components/Button"; // Importe o componente FooterButtons
 
 export default function SelectPage() {
-  const [selectedFile, setSelectedFile] = useState<string>(""); // Estado para o arquivo selecionado
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // Estado para o arquivo selecionado
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // Estado para o filtro selecionado
   const [isLoading, setIsLoading] = useState<boolean>(false); // Estado para controlar o overlay de carregamento
   const router = useRouter(); // Hook para redirecionar o usuário
@@ -15,9 +15,7 @@ export default function SelectPage() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const fileURL = URL.createObjectURL(file); // Gera uma URL temporária para o arquivo
-      localStorage.setItem("selectedFile", fileURL); // Salva a URL no localStorage
-      setSelectedFile(fileURL); // Atualiza o estado com a URL
+      setSelectedFile(file); // Atualiza o estado com o arquivo selecionado
     }
   };
 
@@ -25,7 +23,7 @@ export default function SelectPage() {
     setSelectedFilter(filter); // Atualiza o filtro selecionado
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!selectedFile) {
       alert("Por favor, selecione uma imagem antes de salvar.");
       return;
@@ -36,17 +34,33 @@ export default function SelectPage() {
       return;
     }
 
-    // Salva o filtro no localStorage
-    localStorage.setItem("selectedFilter", selectedFilter);
-
     // Exibe o overlay de carregamento
     setIsLoading(true);
 
-    // Simula o tempo de processamento do filtro
-    setTimeout(() => {
+    // Cria um objeto FormData para enviar o arquivo e o filtro
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("filter", selectedFilter);
+
+    try {
+      // Envia o arquivo para o backend
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao enviar o arquivo.");
+      }
+
+      // Redireciona para a página de resultados após o envio bem-sucedido
+      router.push("/results");
+    } catch (error) {
+      console.error(error);
+      alert("Ocorreu um erro ao salvar a imagem.");
+    } finally {
       setIsLoading(false); // Oculta o overlay após o processamento
-      router.push("/results"); // Redireciona para a página de resultados
-    }, 3000); // Tempo simulado de 3 segundos
+    }
   };
 
   return (
@@ -64,7 +78,7 @@ export default function SelectPage() {
           <input
             type="text"
             placeholder="Selecione o arquivo..."
-            value={selectedFile}
+            value={selectedFile ? selectedFile.name : ""}
             readOnly
             className="flex-1 bg-transparent text-black focus:outline-none"
           />
