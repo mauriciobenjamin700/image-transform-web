@@ -10,11 +10,11 @@ export default function Home() {
   const router = useRouter();
 
   const handleNavigateToCamera = () => {
-    router.push("/select"); //rota para abrir a pagina de camera
+    router.push("/cam"); // Atualizado para a rota correta da página de câmera
   };
 
   const handleNavigateToGallery = () => {
-    router.push("/select"); // rota para a pagina da seleção da galeria
+    router.push("/select"); // Rota para a página da seleção da galeria
   };
 
   return (
