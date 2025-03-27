@@ -1,70 +1,60 @@
 "use client";
 
 import React, { useState } from "react";
+import { FaChevronDown } from "react-icons/fa"; // Ícone de seta para baixo
 
-// Componente Dropdown
-// Este componente renderiza um menu suspenso (dropdown) que permite ao usuário selecionar uma opção.
-// Quando uma opção é selecionada, uma ação é executada com base na escolha do usuário.
 export default function Dropdown() {
-  // Estado para controlar se o menu suspenso está aberto ou fechado
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Estado para abrir/fechar o menu
+  const [selectedOption, setSelectedOption] = useState("ex: Pixelização"); // Estado para a opção selecionada
 
-  // Função para alternar o estado do menu suspenso (abrir/fechar)
+  // Alternar o estado do menu suspenso
   const toggleDropdown = () => {
-    setIsOpen(!isOpen); // Inverte o estado atual de `isOpen`
+    setIsOpen(!isOpen);
   };
 
   // Função chamada ao selecionar uma opção
   const handleOptionClick = (option: string) => {
-    console.log(`Opção selecionada: ${option}`); // Exibe a opção selecionada no console
+    setSelectedOption(option); // Atualiza o texto na caixa
     setIsOpen(false); // Fecha o menu suspenso
-    performAction(option); // Executa uma ação com base na opção selecionada
-  };
-
-  // Função para executar uma ação com base na opção selecionada
-  const performAction = (option: string) => {
-    // Substitua esta lógica pela ação desejada
-    alert(`Ação ativada para: ${option}`); // Exibe um alerta com a opção selecionada
   };
 
   return (
-    <div className="relative inline-block text-left">
-      {/* Botão principal */}
-      {/* Este botão abre ou fecha o menu suspenso ao ser clicado */}
-      <button
-        onClick={toggleDropdown} // Chama a função para alternar o menu
-        className="bg-[#CEB863] text-black p-2 rounded-lg"
+    <div className="relative w-full max-w-md">
+      {/* Label */}
+      <label className="block mb-2 text-sm font-medium text-gray-700">
+        Selecionar filtro:
+      </label>
+
+      {/* Caixa com placeholder e botão */}
+      <div
+        className="flex items-center justify-between w-full p-2 border border-gray-300 rounded-lg bg-white cursor-pointer"
+        onClick={toggleDropdown}
       >
-        Selelecione uma opção de filtro
-      </button>
+        <span className="text-gray-500">{selectedOption}</span>
+        <FaChevronDown className="text-gray-500" />
+      </div>
 
       {/* Menu suspenso */}
-      {/* Renderizado apenas quando `isOpen` é verdadeiro */}
       {isOpen && (
-        <div className="absolute mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+        <div className="absolute mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
           <ul className="py-2">
-            {/* Opção 1 */}
             <li
-              onClick={() => handleOptionClick("Filtro 1")} // Chama a função ao clicar na opção
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer font-bold text-black"
+              onClick={() => handleOptionClick("Filtro 1")}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
-              Opção 1
+              Filtro 1
             </li>
-
-            {/* Opção 2 */}
             <li
-              onClick={() => handleOptionClick("Filtro 2")} // Chama a função ao clicar na opção
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer font-bold text-black"
+              onClick={() => handleOptionClick("Filtro 2")}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
-              Opção 2
+              Filtro 2
             </li>
-
-            {/* Opção 3 */}
             <li
-              onClick={() => handleOptionClick("Filtro 3")} // Chama a função ao clicar na opção
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer font-bold text-black"
+              onClick={() => handleOptionClick("Filtro 3")}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
-              Opção 3
+              Filtro 3
             </li>
           </ul>
         </div>
