@@ -44,19 +44,19 @@ export default function Dropdown({ onFilterChange }: DropdownProps) {
         <div className="absolute mt-1 w-80 bg-white border border-gray-400 rounded-lg shadow-lg z-10">
           <ul className="py-2">
             <li
-              onClick={() => handleOptionClick("Filtro 1")}
+              onClick={() => handleOptionClick("blue")}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
               Filtro 1
             </li>
             <li
-              onClick={() => handleOptionClick("Filtro 2")}
+              onClick={() => handleOptionClick("grey")}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
               Filtro 2
             </li>
             <li
-              onClick={() => handleOptionClick("Filtro 3")}
+              onClick={() => handleOptionClick("green")}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
               Filtro 3
