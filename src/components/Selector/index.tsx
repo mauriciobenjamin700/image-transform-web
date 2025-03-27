@@ -21,13 +21,13 @@ export default function Dropdown() {
   return (
     <div className="relative w-full max-w-md">
       {/* Label */}
-      <label className="block mb-2 text-sm font-medium text-gray-700">
+      <label className="block mb-2 text-sm font-medium text-black">
         Selecionar filtro:
       </label>
 
       {/* Caixa com placeholder e botão */}
       <div
-        className="flex items-center justify-between w-full p-2 border border-gray-300 rounded-lg bg-white cursor-pointer"
+        className="flex items-center justify-between w-80 p-2 border border-gray-400 rounded-lg bg-white cursor-pointer"
         onClick={toggleDropdown}
       >
         <span className="text-gray-500">{selectedOption}</span>
@@ -36,7 +36,7 @@ export default function Dropdown() {
 
       {/* Menu suspenso */}
       {isOpen && (
-        <div className="absolute mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+        <div className="absolute mt-1 w-80 bg-white border border-gray-400 rounded-lg shadow-lg z-10">
           <ul className="py-2">
             <li
               onClick={() => handleOptionClick("Filtro 1")}
