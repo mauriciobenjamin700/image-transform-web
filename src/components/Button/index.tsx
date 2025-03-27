@@ -7,14 +7,17 @@ import { useRouter } from "next/navigation";
 interface FooterButtonsProps {
   backRoute: string; // Rota para o botão "Voltar"
   saveRoute: string; // Rota para o botão "Salvar"
+  saveAction?: () => void; // Ação personalizada para o botão "Salvar"
 }
 
-export default function FooterButtons({ backRoute, saveRoute }: FooterButtonsProps) {
+export default function FooterButtons({ backRoute, saveRoute, saveAction }: FooterButtonsProps) {
   const router = useRouter();
 
   // Função para o botão "Salvar"
   const handleSave = () => {
-    console.log("Simulação: Dados salvos com sucesso!");
+    if (saveAction) {
+      saveAction(); // Executa a ação personalizada, se fornecida
+    }
     router.push(saveRoute); // Redireciona para a rota passada como prop
   };
 
