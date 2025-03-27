@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"; // Para redirecionar o usuário
 import Header from "../../components/Header"; // Importe o componente Header
 import Selector from "../../components/Selector"; // Importe o componente Selector
 import FooterButtons from "../../components/Button"; // Importe o componente FooterButtons
+import { uploadImage } from "@/services/image";
+import {saveLocal} from "@/services/storage";
 
 export default function SelectPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Estado para o arquivo selecionado
@@ -38,20 +40,12 @@ export default function SelectPage() {
     setIsLoading(true);
 
     // Cria um objeto FormData para enviar o arquivo e o filtro
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("filter", selectedFilter);
-
     try {
       // Envia o arquivo para o backend
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao enviar o arquivo.");
-      }
+      const response = await uploadImage(selectedFile, selectedFilter);
+      saveLocal("filtered", response.filtered_url); // Salva a URL da imagem filtrada no localStorage
+      saveLocal("origin", response.origin_url); // Salva a URL da imagem original no localStorage
+      saveLocal("filter", selectedFilter); // Salva o filtro selecionado no localStorage
 
       // Redireciona para a página de resultados após o envio bem-sucedido
       router.push("/results");

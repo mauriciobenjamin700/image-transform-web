@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header"; // Importe o componente Header
 import FooterButtons from "../../components/Button"; // Importe o componente FooterButtons
+import Image from "next/image"; // Importe o componente Image do Next.js
 
 export default function ResultsPage() {
   const [originalImage, setOriginalImage] = useState<string | null>(null); // URL da imagem original
@@ -36,7 +37,7 @@ export default function ResultsPage() {
           
             <div className="w-full h-96 bg-gray-400 rounded-lg flex items-center justify-center">
               {originalImage ? (
-                <img
+                <Image
                   src={originalImage} // URL da imagem salva no localStorage
                   alt="Imagem Original"
                   className="w-full h-full object-cover rounded-lg"
