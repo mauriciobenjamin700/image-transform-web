@@ -14,7 +14,10 @@ export default function SelectPage() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0].name); // Atualiza o nome do arquivo selecionado
+      const file = event.target.files[0];
+      const fileURL = URL.createObjectURL(file); // Gera uma URL temporária para o arquivo
+      localStorage.setItem("selectedFile", fileURL); // Salva a URL no localStorage
+      setSelectedFile(fileURL); // Atualiza o estado com a URL
     }
   };
 
@@ -32,6 +35,9 @@ export default function SelectPage() {
       alert("Por favor, selecione um filtro antes de salvar.");
       return;
     }
+
+    // Salva o filtro no localStorage
+    localStorage.setItem("selectedFilter", selectedFilter);
 
     // Exibe o overlay de carregamento
     setIsLoading(true);

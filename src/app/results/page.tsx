@@ -5,27 +5,16 @@ import Header from "../../components/Header"; // Importe o componente Header
 import FooterButtons from "../../components/Button"; // Importe o componente FooterButtons
 
 export default function ResultsPage() {
-  const [originalImage, setOriginalImage] = useState<string | null>(null); // Estado para a imagem original
-  const [filteredImage, setFilteredImage] = useState<string | null>(null); // Estado para a imagem com filtro
+  const [originalImage, setOriginalImage] = useState<string | null>(null); // URL da imagem original
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // Estado para o filtro selecionado
 
-  // Função para buscar as imagens do backend
+  // Função para buscar os dados do localStorage
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch("/api/images"); // Substitua pela URL da sua API
-        if (response.ok) {
-          const data = await response.json();
-          setOriginalImage(data.originalImage); // URL da imagem original
-          setFilteredImage(data.filteredImage); // URL da imagem com filtro
-        } else {
-          console.error("Erro ao buscar as imagens:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar as imagens:", error);
-      }
-    };
+    const file = localStorage.getItem("selectedFile"); // Recupera a URL da imagem selecionada
+    const filter = localStorage.getItem("selectedFilter"); // Recupera o filtro selecionado
 
-    fetchImages();
+    setOriginalImage(file); // Define a URL da imagem original no estado
+    setSelectedFilter(filter); // Define o filtro selecionado no estado
   }, []);
 
   // Função para o botão "Salvar"
@@ -48,7 +37,7 @@ export default function ResultsPage() {
             <div className="w-full h-96 bg-gray-400 rounded-lg flex items-center justify-center">
               {originalImage ? (
                 <img
-                  src={originalImage} // URL da imagem original vinda do backend
+                  src={originalImage} // URL da imagem salva no localStorage
                   alt="Imagem Original"
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -60,17 +49,13 @@ export default function ResultsPage() {
 
           {/* Imagem com filtro aplicado */}
           <div className="flex flex-col items-center w-1/2 bg-gray-200 rounded-lg p-4">
-            <h2 className="text-lg font-semibold mb-4 text-black">Imagem com Filtro</h2> {/* Texto em preto */}
+            <h2 className="text-lg font-semibold mb-4 text-black">Filtro Aplicado</h2> {/* Texto em preto */}
             
             <div className="w-full h-96 bg-gray-400 rounded-lg flex items-center justify-center">
-              {filteredImage ? (
-                <img
-                  src={filteredImage} // URL da imagem com filtro vinda do backend
-                  alt="Imagem com Filtro"
-                  className="w-full h-full object-cover rounded-lg"
-                />
+              {selectedFilter ? (
+                <span className="text-black text-lg font-semibold">{selectedFilter}</span> // Exibe o filtro selecionado
               ) : (
-                <span>Carregando...</span> // Placeholder enquanto a imagem é carregada
+                <span>Carregando...</span> // Placeholder enquanto o filtro é carregado
               )}
             </div>
           </div>
