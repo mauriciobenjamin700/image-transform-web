@@ -3,7 +3,11 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa"; // Ícone de seta para baixo
 
-export default function Dropdown() {
+interface DropdownProps {
+  onFilterChange: (filter: string) => void; // Prop para notificar o componente pai sobre a seleção
+}
+
+export default function Dropdown({ onFilterChange }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false); // Estado para abrir/fechar o menu
   const [selectedOption, setSelectedOption] = useState("ex: Pixelização"); // Estado para a opção selecionada
 
@@ -16,6 +20,7 @@ export default function Dropdown() {
   const handleOptionClick = (option: string) => {
     setSelectedOption(option); // Atualiza o texto na caixa
     setIsOpen(false); // Fecha o menu suspenso
+    onFilterChange(option); // Notifica o componente pai sobre a seleção
   };
 
   return (

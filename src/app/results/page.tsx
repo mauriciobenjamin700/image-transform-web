@@ -28,6 +28,11 @@ export default function ResultsPage() {
     fetchImages();
   }, []);
 
+  // Função para o botão "Salvar"
+  const handleSave = () => {
+    alert("Ação de salvar executada!"); // Substitua pela lógica necessária
+  };
+
   return (
     <main className="flex flex-col items-center h-screen">
       <Header /> {/* Cabeçalho da página */}
@@ -73,7 +78,10 @@ export default function ResultsPage() {
       </div>
 
       {/* Botões no rodapé */}
-      <FooterButtons backRoute="/select" saveRoute="/" /> {/* Rotas configuradas */}
+      <FooterButtons
+        backRoute="/select"
+        saveAction={handleSave} // Passa a função personalizada para o botão "Salvar"
+      />
     </main>
   );
 }

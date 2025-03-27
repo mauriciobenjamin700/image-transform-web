@@ -8,6 +8,7 @@ import FooterButtons from "../../components/Button"; // Importe o componente Foo
 
 export default function SelectPage() {
   const [selectedFile, setSelectedFile] = useState<string>(""); // Estado para o arquivo selecionado
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // Estado para o filtro selecionado
   const [isLoading, setIsLoading] = useState<boolean>(false); // Estado para controlar o overlay de carregamento
   const router = useRouter(); // Hook para redirecionar o usuário
 
@@ -17,9 +18,18 @@ export default function SelectPage() {
     }
   };
 
+  const handleFilterChange = (filter: string) => {
+    setSelectedFilter(filter); // Atualiza o filtro selecionado
+  };
+
   const handleSave = () => {
     if (!selectedFile) {
       alert("Por favor, selecione uma imagem antes de salvar.");
+      return;
+    }
+
+    if (!selectedFilter) {
+      alert("Por favor, selecione um filtro antes de salvar.");
       return;
     }
 
@@ -65,7 +75,7 @@ export default function SelectPage() {
 
         {/* Selector alinhado à esquerda */}
         <div className="w-full">
-          <Selector /> {/* Use o componente Selector */}
+          <Selector onFilterChange={handleFilterChange} /> {/* Use o componente Selector */}
         </div>
       </div>
 
@@ -73,9 +83,8 @@ export default function SelectPage() {
       <div className="w-full max-w-md px-4">
         <FooterButtons
           backRoute="/"
-          saveRoute="/results"
-    saveAction={handleSave}
-  />
+          saveAction={handleSave} // Passa a função handleSave para o botão "Salvar"
+        />
       </div>
 
       {/* Overlay de carregamento */}
