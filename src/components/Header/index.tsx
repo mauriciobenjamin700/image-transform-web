@@ -17,7 +17,7 @@ export default function Header() {
 
       {/* Botão alinhado à direita */}
       <button
-        onClick={() => router.push("/initial")} // Adiciona o evento de clique
+        onClick={() => router.push("/")} // Adiciona o evento de clique
         className="p-2 rounded-lg flex items-center ml-auto hover:shadow-lg hover:shadow-gray-500 transition-shadow"
       >
         <Image
