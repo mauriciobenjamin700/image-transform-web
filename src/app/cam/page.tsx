@@ -31,10 +31,12 @@ export default function CameraPage() {
 
   useEffect(() => {
     startCamera(); // Inicia a câmera ao carregar a página
+
     return () => {
       // Limpa o fluxo da câmera ao desmontar o componente
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null; // Remove a referência ao fluxo
       }
     };
   }, []);
@@ -61,6 +63,12 @@ export default function CameraPage() {
   // Confirma a foto e redireciona para a página de seleção
   const confirmPhoto = () => {
     if (photo) {
+      // Limpa o fluxo da câmera antes de navegar
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+
       localStorage.setItem("capturedPhoto", photo); // Salva a foto no localStorage
       router.push("/select-camera"); // Redireciona para a página select-camera
     }
@@ -68,6 +76,11 @@ export default function CameraPage() {
 
   // Voltar para a página principal
   const goBack = () => {
+    // Limpa o fluxo da câmera antes de voltar
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
     router.push("/"); // Redireciona para a página principal
   };
 
