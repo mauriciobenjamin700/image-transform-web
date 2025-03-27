@@ -24,12 +24,12 @@ export default function Home() {
 
       {/* Botões abaixo do Header */}
       <div className="flex flex-col items-center justify-center h-screen gap-8">
-        <div className="flex gap-8">
+        <div className="flex gap-20 ">
           {/* Botão 1 */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center ">
             <button
               onClick={handleNavigateToCamera}
-              className="bg-[#CEB863] p-4 rounded-lg"
+              className="bg-[#CEB863] p-4 rounded-lg ml-auto hover:shadow-lg hover:shadow-gray-800 transition-shadow"
             >
               <Image src={icon1} alt="Icon 1" width={50} height={50} />
             </button>
@@ -40,7 +40,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <button
               onClick={handleNavigateToGallery}
-              className="bg-[#CEB863] p-4 rounded-lg"
+              className="bg-[#CEB863] p-4 rounded-lg ml-auto hover:shadow-lg hover:shadow-gray-800 transition-shadow"
             >
               <Image src={icon2} alt="Icon 2" width={50} height={50} />
             </button>
