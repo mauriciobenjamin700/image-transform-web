@@ -6,14 +6,17 @@ import FooterButtons from "../../components/Button"; // Importe o componente Foo
 
 import { getLocal } from "@/services/storage";
 import { getFilteredImage, getOriginImage } from "@/services/image";
+import { getResults } from "@/utils";
+import { ImageResponse } from "@/schemas";
 
 export default function ResultsPage() {
   const [originalImage, setOriginalImage] = useState<string | null>(null); // URL da imagem original
   const [filteredImage, setFilteredImage] = useState<string | null>(null); // URL da imagem filtrada
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // Filtro selecionado
-
+  const [response, setResponse] = useState<ImageResponse | null>(null); // Estado para armazenar os resultados
   // Recupera os dados do localStorage ao carregar a página
   useEffect(() => {
+    setResponse(getResults());
     const origin = getLocal("origin"); // Recupera a URL da imagem original
     const filtered = getLocal("filtered"); // Recupera a URL da imagem filtrada
     const filter = getLocal("filter"); // Recupera o filtro selecionado
@@ -21,10 +24,6 @@ export default function ResultsPage() {
     setFilteredImage(filtered ? getFilteredImage(filtered) : null); // Define a URL da imagem filtrada no estado
     setSelectedFilter(filter); // Define o filtro selecionado no estado
   }, []);
-
-  console.log(originalImage);
-  console.log(filteredImage);
-  console.log(selectedFilter);
 
   // Função para o botão "Salvar"
   const handleSave = () => {
@@ -95,9 +94,18 @@ export default function ResultsPage() {
               )}
             </div>
             {selectedFilter && (
-              <p className="text-black text-lg font-semibold mt-4">
-                Filtro: {selectedFilter}
-              </p>
+              <div>
+                <p className="text-black text-lg font-semibold mt-4">
+                  Filtro: {selectedFilter}
+                </p>
+                <p className="text-black text-lg font-semibold mt-4">
+                  Data: {response?.created_at}
+                </p>
+                <p className="text-black text-lg font-semibold mt-4">
+                  id: {response?.id}
+                </p>
+              </div>
+              
             )}
           </div>
         </div>
