@@ -25,9 +25,31 @@ export default function ResultsPage() {
   console.log(originalImage);
   console.log(filteredImage);
   console.log(selectedFilter);
+
   // Função para o botão "Salvar"
   const handleSave = () => {
-    alert("Ação de salvar executada!"); // Substitua pela lógica necessária
+    if (!filteredImage) {
+      alert("Nenhuma imagem filtrada disponível para salvar.");
+      return;
+    }
+
+    // Converte a imagem filtrada para um Blob
+    fetch(filteredImage)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob); // Cria uma URL temporária para o Blob
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "imagem-filtrada.png"; // Nome do arquivo a ser salvo
+        document.body.appendChild(link);
+        link.click(); // Simula o clique no link
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url); // Libera a URL temporária
+      })
+      .catch((error) => {
+        console.error("Erro ao baixar a imagem:", error);
+        alert("Erro ao salvar a imagem.");
+      });
   };
 
   return (

@@ -48,44 +48,15 @@ export default function Dropdown({ onFilterChange }: DropdownProps) {
               onClick={() => handleOptionClick(FILTERS.BLUR)}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
-              Filtro 1
+              borrado
             </li>
             <li
               onClick={() => handleOptionClick(FILTERS.GRAY)}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
             >
-              Filtro 2
+              cinza
             </li>
-            <li
-              onClick={() => handleOptionClick(FILTERS.SMOOTH)}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
-            >
-              Filtro 4
-            </li>
-            <li
-              onClick={() => handleOptionClick(FILTERS.DETAIL)}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
-            >
-              Filtro 5
-            </li>
-            <li
-              onClick={() => handleOptionClick(FILTERS.EMBOSS)}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
-            >
-              Filtro 6
-            </li>
-            <li
-              onClick={() => handleOptionClick(FILTERS.SHARPEN)}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
-            >
-              Filtro 7
-            </li>
-            <li
-              onClick={() => handleOptionClick(FILTERS.EDGE_ENHANCE)}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
-            >
-              Filtro 8
-            </li>
+            
           </ul>
         </div>
       )}
