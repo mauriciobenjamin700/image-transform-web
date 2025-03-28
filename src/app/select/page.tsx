@@ -6,7 +6,7 @@ import Header from "../../components/Header"; // Importe o componente Header
 import Selector from "../../components/Selector"; // Importe o componente Selector
 import FooterButtons from "../../components/Button"; // Importe o componente FooterButtons
 import { uploadImage } from "@/services/image";
-import {saveLocal} from "@/services/storage";
+import { saveResults } from "@/utils";
 
 export default function SelectPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Estado para o arquivo selecionado
@@ -43,9 +43,7 @@ export default function SelectPage() {
     try {
       // Envia o arquivo para o backend
       const response = await uploadImage(selectedFile, selectedFilter);
-      saveLocal("filtered", response.filtered_url); // Salva a URL da imagem filtrada no localStorage
-      saveLocal("origin", response.origin_url); // Salva a URL da imagem original no localStorage
-      saveLocal("filter", selectedFilter); // Salva o filtro selecionado no localStorage
+      saveResults(response); // Salva os resultados no localStorage
 
       // Redireciona para a página de resultados após o envio bem-sucedido
       console.log(response);

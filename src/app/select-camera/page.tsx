@@ -6,6 +6,8 @@ import Header from "../../components/Header";
 import Selector from "../../components/Selector";
 import FooterButtons from "../../components/Button";
 import { useRouter } from "next/navigation";
+import { uploadImage } from "@/services/image";
+import { saveResults } from "@/utils";
 
 export default function SelectCameraPage() {
   const [photo, setPhoto] = useState<string | null>(null);
@@ -20,7 +22,7 @@ export default function SelectCameraPage() {
     }
   }, []);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!photo) {
       alert("Por favor, capture uma foto antes de salvar.");
       return;
@@ -32,7 +34,18 @@ export default function SelectCameraPage() {
     }
 
     setIsLoading(true); // Ativa o overlay de carregamento
+    const byteString = atob(photo.split(",")[1]);
+    const mimeString = photo.split(",")[0].split(":")[1].split(";")[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
 
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const file = new File([arrayBuffer], "photo.jpg", { type: mimeString });
+    const response = await uploadImage(file, selectedFilter); // Envia a foto e o filtro para o backend
+    saveResults(response); // Salva os resultados no localStorage
     // Simula um pequeno atraso antes de redirecionar
     setTimeout(() => {
       setIsLoading(false); // Oculta o overlay após o processamento
