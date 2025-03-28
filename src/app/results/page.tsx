@@ -3,21 +3,28 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header"; // Importe o componente Header
 import FooterButtons from "../../components/Button"; // Importe o componente FooterButtons
-import Image from "next/image"; // Importe o componente Image do Next.js
+
+import { getLocal } from "@/services/storage";
+import { getFilteredImage, getOriginImage } from "@/services/image";
 
 export default function ResultsPage() {
   const [originalImage, setOriginalImage] = useState<string | null>(null); // URL da imagem original
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // Estado para o filtro selecionado
+  const [filteredImage, setFilteredImage] = useState<string | null>(null); // URL da imagem filtrada
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null); // Filtro selecionado
 
-  // Função para buscar os dados do localStorage
+  // Recupera os dados do localStorage ao carregar a página
   useEffect(() => {
-    const file = localStorage.getItem("selectedFile"); // Recupera a URL da imagem selecionada
-    const filter = localStorage.getItem("selectedFilter"); // Recupera o filtro selecionado
-
-    setOriginalImage(file); // Define a URL da imagem original no estado
+    const origin = getLocal("origin"); // Recupera a URL da imagem original
+    const filtered = getLocal("filtered"); // Recupera a URL da imagem filtrada
+    const filter = getLocal("filter"); // Recupera o filtro selecionado
+    setOriginalImage(origin ? getOriginImage(origin) : null); // Define a URL da imagem original no estado
+    setFilteredImage(filtered ? getFilteredImage(filtered) : null); // Define a URL da imagem filtrada no estado
     setSelectedFilter(filter); // Define o filtro selecionado no estado
   }, []);
 
+  console.log(originalImage);
+  console.log(filteredImage);
+  console.log(selectedFilter);
   // Função para o botão "Salvar"
   const handleSave = () => {
     alert("Ação de salvar executada!"); // Substitua pela lógica necessária
@@ -33,14 +40,15 @@ export default function ResultsPage() {
         <div className="flex justify-between w-full max-w-4xl gap-8">
           {/* Imagem original */}
           <div className="flex flex-col items-center w-1/2 bg-gray-200 rounded-lg p-4">
-            <h2 className="text-lg font-semibold mb-4 text-black">Imagem Original</h2> {/* Texto em preto */}
-          
+            <h2 className="text-lg font-semibold mb-4 text-black">Imagem Original</h2>
             <div className="w-full h-96 bg-gray-400 rounded-lg flex items-center justify-center">
               {originalImage ? (
-                <Image
-                  src={originalImage} // URL da imagem salva no localStorage
+                <img
+                  src={originalImage} // URL da imagem original
                   alt="Imagem Original"
                   className="w-full h-full object-cover rounded-lg"
+                  width={500}
+                  height={500}
                 />
               ) : (
                 <span>Carregando...</span> // Placeholder enquanto a imagem é carregada
@@ -50,15 +58,25 @@ export default function ResultsPage() {
 
           {/* Imagem com filtro aplicado */}
           <div className="flex flex-col items-center w-1/2 bg-gray-200 rounded-lg p-4">
-            <h2 className="text-lg font-semibold mb-4 text-black">Filtro Aplicado</h2> {/* Texto em preto */}
-            
+            <h2 className="text-lg font-semibold mb-4 text-black">Filtro Aplicado</h2>
             <div className="w-full h-96 bg-gray-400 rounded-lg flex items-center justify-center">
-              {selectedFilter ? (
-                <span className="text-black text-lg font-semibold">{selectedFilter}</span> // Exibe o filtro selecionado
+              {filteredImage ? (
+                <img
+                  src={filteredImage} // URL da imagem filtrada
+                  alt="Imagem Filtrada"
+                  className="w-full h-full object-cover rounded-lg"
+                  width={500}
+                  height={500}
+                />
               ) : (
-                <span>Carregando...</span> // Placeholder enquanto o filtro é carregado
+                <span>Carregando...</span> // Placeholder enquanto a imagem é carregada
               )}
             </div>
+            {selectedFilter && (
+              <p className="text-black text-lg font-semibold mt-4">
+                Filtro: {selectedFilter}
+              </p>
+            )}
           </div>
         </div>
       </div>

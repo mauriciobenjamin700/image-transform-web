@@ -48,7 +48,9 @@ export default function SelectPage() {
       saveLocal("filter", selectedFilter); // Salva o filtro selecionado no localStorage
 
       // Redireciona para a página de resultados após o envio bem-sucedido
+      console.log(response);
       router.push("/results");
+
     } catch (error) {
       console.error(error);
       alert("Ocorreu um erro ao salvar a imagem.");
